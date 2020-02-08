@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{asset('assetic/bootstrap_css_bootstrap_1.css')}}">
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+          {% javascripts '@jquery' '@bootstrap_js' %}
+          <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+          <script type="text/javascript" src="{{ asset_url }}"></script>
+          <script type="text/javascript" src="{{ asset('assetic/jquery.js') }}"></script>
+          <script type="text/javascript" src="{{ asset('assetic/bootstrap_js.js') }}"></script>
+          <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+          {% endjavascripts %}
+        {% endblock %}
+    </body>
+</html>
+
+
+<!--
+php composer.phar
+
+php -d memory_limit=-1 composer.phar
+-->
