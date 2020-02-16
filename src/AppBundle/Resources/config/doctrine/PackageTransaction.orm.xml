@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\PackageTransaction" table="package_transaction">
+    <indexes>
+      <index name="package_transaction_fk0" columns="package"/>
+      <index name="package_transaction_fk1" columns="package_status"/>
+      <index name="package_transaction_fk2" columns="transfer_status"/>
+      <index name="package_transaction_fk3" columns="courier"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="transactionDate" type="datetime" column="transaction_date" nullable="false"/>
+    <many-to-one field="package" target-entity="Package" fetch="LAZY">
+      <join-columns>
+        <join-column name="package" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="packageStatus" target-entity="PackageStatus" fetch="LAZY">
+      <join-columns>
+        <join-column name="package_status" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="transferStatus" target-entity="TransferStatus" fetch="LAZY">
+      <join-columns>
+        <join-column name="transfer_status" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="courier" target-entity="Courier" fetch="LAZY">
+      <join-columns>
+        <join-column name="courier" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
