@@ -15,9 +15,9 @@ class Address
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="city", type="string", length=255, nullable=false)
      */
-    private $name;
+    private $city;
 
     /**
      * @var integer
@@ -25,6 +25,20 @@ class Address
      * @ORM\Column(name="is_storage", type="integer", nullable=false)
      */
     private $isStorage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="street_and_number", type="string", length=255, nullable=false)
+     */
+    private $streetAndNumber;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="zipcode", type="integer", length=10, nullable=false)
+     */
+    private $zipcode;
 
     /**
      * @var integer
@@ -94,4 +108,54 @@ class Address
     {
         return $this->id;
     }
+
+    /**
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStreetAndNumber()
+    {
+        return $this->streetAndNumber;
+    }
+
+    /**
+     * @param string $streetAndNumber
+     */
+    public function setStreetAndNumber($streetAndNumber)
+    {
+        $this->streetAndNumber = $streetAndNumber;
+    }
+
+    /**
+     * @return int
+     */
+    public function getZipcode()
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * @param int $zipcode
+     */
+    public function setZipcode($zipcode)
+    {
+        $this->zipcode = $zipcode;
+    }
+
+
 }

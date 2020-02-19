@@ -22,9 +22,9 @@ class Courier
     private $id;
 
     /**
-     * @var \AppBundle\Entity\FosUser
+     * @var \AppBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\FosUser")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user", referencedColumnName="id")
      * })
@@ -46,11 +46,11 @@ class Courier
     /**
      * Set user
      *
-     * @param \AppBundle\Entity\FosUser $user
+     * @param \AppBundle\Entity\User $user
      *
      * @return Courier
      */
-    public function setUser(\AppBundle\Entity\FosUser $user = null)
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -60,7 +60,7 @@ class Courier
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\FosUser
+     * @return \AppBundle\Entity\User
      */
     public function getUser()
     {

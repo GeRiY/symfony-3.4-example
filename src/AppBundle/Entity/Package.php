@@ -110,9 +110,9 @@ class Package
     private $courier;
 
     /**
-     * @var \AppBundle\Entity\FosUser
+     * @var \AppBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\FosUser")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="handler", referencedColumnName="id")
      * })
@@ -374,11 +374,11 @@ class Package
     /**
      * Set handler
      *
-     * @param \AppBundle\Entity\FosUser $handler
+     * @param \AppBundle\Entity\User $handler
      *
      * @return Package
      */
-    public function setHandler(\AppBundle\Entity\FosUser $handler = null)
+    public function setHandler(\AppBundle\Entity\User $handler = null)
     {
         $this->handler = $handler;
 
@@ -388,7 +388,7 @@ class Package
     /**
      * Get handler
      *
-     * @return \AppBundle\Entity\FosUser
+     * @return \AppBundle\Entity\User
      */
     public function getHandler()
     {
