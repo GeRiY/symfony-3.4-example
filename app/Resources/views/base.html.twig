@@ -14,23 +14,43 @@
                 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
                     <div class=" navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav col-lg-12">
-
-                            <li class="nav-item dropdown ml-md-auto">
-                                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Törzsadatok</a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item dropdown offset-1">
+                                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Törzsadatok kezelése</a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="nav-link" href="{{path('tag_index')}}">Tag-ek<span class="sr-only">(current)</span></a>
+                                    <a class="nav-link" href="{{path('tag_index')}}">Tag-ek</a>
                                     <a class="nav-link" href="{{path('packagestatus_index')}}">Csomag Státuszok</a>
                                     <a class="nav-link" href="{{path('address_index')}}">Címek</a>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Admin menü</a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="nav-link" href="{{path('package_index')}}">Rendelések</a>
+                                    <a class="nav-link" href="#">Test2</a>
+                                    <a class="nav-link" href="#">Test3</a>
+                            </li>
+                            {% elseif is_granted('ROLE_USER') %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{path('package_index')}}">Feladott Csomagjaim</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{path('package_new')}}">Új csomag feladása</a>
+                                </li>
+                            {% else %}
+
+                            {% endif %}
                             <li></li>
-                            {% if is_granted("ROLE_USER") %}
-                                <li class="nav-item offset-9">
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <li class="nav-item offset-6">
+                                    <a class="nav-link" href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{path("fos_user_security_logout")}}">Kijelentkezés</a>
                                 </li>
                             {% else %}
-                                <li class="nav-item offset-9">
-                                    <a class="nav-link" href="{{path("fos_user_security_login")}}">Bejelentkezés</a>
-                                </li>
+                                    <li class="nav-item offset-11">
+                                        <a class="nav-link" href="{{path("fos_user_security_login")}}">Bejelentkezés</a>
+                                    </li>
                             {% endif %}
 
 
@@ -44,9 +64,11 @@
           {% javascripts '@jquery' '@bootstrap_js' %}
           <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
           <script type="text/javascript" src="{{ asset_url }}"></script>
-          <script type="text/javascript" src="{{ asset('assetic/jquery.js') }}"></script>
-          <script type="text/javascript" src="{{ asset('assetic/bootstrap_js.js') }}"></script>
-          <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+{#              <script type="text/javascript" src="{{ asset('js/DateTimePicker/jquery.min.js') }}"></script>#}
+{#              <script type="text/javascript" src="{{ asset('assetic/jquery.js') }}"></script>#}
+              <script type="text/javascript" src="{{ asset('assetic/bootstrap_js.js') }}"></script>
+              {#          <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>#}
+{#              <script type="text/javascript" src="{{ asset('js/DateTimePicker/jquery.min.map') }}"></script>#}
           {% endjavascripts %}
         {% endblock %}
     </body>

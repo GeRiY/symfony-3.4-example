@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Tag controller.
  *
- * @Route("tag")
+ * @Route("admin/tag")
  */
 class TagController extends Controller
 {
@@ -101,7 +101,7 @@ class TagController extends Controller
     /**
      * Deletes a tag entity.
      *
-     * @Route("/{id}", name="tag_delete")
+     * @Route("/delete/{id}", name="tag_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Tag $tag)

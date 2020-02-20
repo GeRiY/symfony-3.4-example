@@ -4,7 +4,7 @@
     {% block header %}{{ parent() }}{% endblock %}
     <h1>Tags list</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Name</th>
@@ -18,23 +18,12 @@
                 <td><a href="{{ path('tag_show', { 'id': tag.id }) }}">{{ tag.name }}</a></td>
                 <td>{{ tag.id }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('tag_show', { 'id': tag.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('tag_edit', { 'id': tag.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('tag_show', { 'id': tag.id }) }}">show</a>
+                    <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('tag_edit', { 'id': tag.id }) }}">edit</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('tag_new') }}">Create a new tag</a>
-        </li>
-    </ul>
+    <a class="btn btn-primary" href="{{ path('tag_new') }}">Tag felvitel</a>
 {% endblock %}

@@ -31,6 +31,8 @@ class Courier
      */
     private $user;
 
+    private $name;
+
 
 
     /**
@@ -65,5 +67,13 @@ class Courier
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->user->getUsername();
     }
 }

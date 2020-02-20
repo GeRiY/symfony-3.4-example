@@ -20,7 +20,7 @@ protected $id;
     /**
      * @var \AppBundle\Entity\Address
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Address")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Address" ,cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="address", referencedColumnName="id")
      * })

@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+    <div class="card-title" style="text-align: center;margin-top: 5px;"><h1>Csomag módosítás</h1></div>
+    {{ form_start(edit_form) }}
+    {% set adminFields = ['requestDate', 'deliveredDate', 'packageStatus', 'transferStatus', 'courier', 'handler', 'tag'] %}
+    <div class="container">
+        <div class="row">
+            {#            {{dump()}}#}
+            {#            {{dump(adminFields)}}#}
+
+            {#            {% if row.vars.name in adminFields %}#}
+            {#                {{ subRow.vars.name }} bennevan#}
+            {#            {% else %}#}
+            {#                {{ subRow.vars.name }} nincs benne#}
+            {#            {% endif %}#}
+
+
+            {% for row in edit_form.children %}
+                {% if row.children is empty %}
+                    <div class="col-lg-2" style="margin-top:5px">
+                        {% if row.vars.name == "_token" %}
+                            &nbsp;
+                        {% else %}
+                            {% if 'ROLE_ADMIN' not in app.user.roles and row.vars.name in adminFields %}
+
+                            {% else %}
+                                {{ form_label(row)}}:
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-10" style="margin-top:5px">
+                        {% if 'ROLE_ADMIN' not in app.user.roles and row.vars.name in adminFields %}
+
+                        {% else %}
+                            {{ form_widget(row)}}
+                        {% endif %}
+                    </div>
+                {% else %}
+                    {% for subRow in row.children %}
+                        <div class="col-lg-2" style="margin-top:5px">
+                            {% if subRow.vars.name == "isStorage" %}
+
+                            {% else %}
+                                {% if 'ROLE_ADMIN' not in app.user.roles and row.vars.name in adminFields %}
+
+                                {% else %}
+                                    {{ form_label(subRow)}}:
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="col-lg-10" style="margin-top:5px">
+                            {% if subRow.vars.name == "isStorage" %}
+
+                            {% else %}
+                                {% if 'ROLE_ADMIN' not in app.user.roles and row.vars.name in adminFields %}
+
+                                {% else %}
+                                    {{ form_widget(subRow)}}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            <input type="submit" value="Create" /><br>
+        </div>
+    </div>
+    {#    {{ form_start(form) }}#}
+    {#        {{ form_widget(form) }}#}
+    {#        <input type="submit" value="Create" />#}
+    {#    {{ form_end(form) }}#}
+
+    {#    <ul>#}
+    {#        <li>#}
+    {#            <a href="{{ path('package_index') }}">Back to the list</a>#}
+    {#        </li>#}
+    {#    </ul>#}
+    {{ form_end(edit_form, {'render_rest': false}) }}
+{% endblock %}

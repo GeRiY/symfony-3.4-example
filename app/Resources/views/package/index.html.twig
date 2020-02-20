@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+    <div class="col-lg-12" style="text-align: center;margin-top: 5px"><h1>Csomag lista</h1></div>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Felvitel dátum</th>
+                <th>Kézbesítés dátum</th>
+                <th>Honna</th>
+                <th>Hova</th>
+                <th>Tag</th>
+                <th>Művelet</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for package in packages %}
+            <tr>
+                <td>{{ package.id }}</td>
+                <td>{% if package.requestDate %}{{ package.requestDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if package.deliveredDate %}{{ package.deliveredDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ package.startAddress.name }}</td>
+                <td>{{ package.targetAddress.name }}</td>
+
+                <td>{% if package.tag is not null %}{{ package.tag.name }}{% else %}{% endif %}</td>
+
+                <td>
+                    <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('package_show', { 'id': package.id }) }}">Megtekintés</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('package_edit', { 'id': package.id }) }}">Módosítás</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a class="btn btn-primary" href="{{ path('package_new') }}">Új csomag felvitel</a>
+
+{% endblock %}

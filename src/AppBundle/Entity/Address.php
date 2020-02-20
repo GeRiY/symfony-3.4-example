@@ -50,21 +50,6 @@ class Address
     private $id;
 
 
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Address
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     /**
      * Get name
      *
@@ -72,7 +57,7 @@ class Address
      */
     public function getName()
     {
-        return $this->name;
+        return $this->zipcode.' '.$this->city.' '.$this->streetAndNumber;
     }
 
     /**

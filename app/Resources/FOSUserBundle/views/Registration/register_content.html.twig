@@ -1,10 +1,41 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-<div class="col">
-{{ form_widget(form) }}
-    <div class="col">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12" style="text-align: center;"><h1>Regisztráció</h1></div>
+        {% for row in form.children %}
+            {% if row.children is empty %}
+                <div class="col-lg-2" style="margin-top:5px">
+                    {% if row.vars.name == "_token" %}
+                        &nbsp;
+                    {% else %}
+                        {{ form_label(row)}}:
+                    {% endif %}
+                </div>
+                <div class="col-lg-10" style="margin-top:5px">
+                    {{ form_widget(row)}}
+                </div>
+            {% else %}
+                {% for subRow in row.children %}
+                    <div class="col-lg-2" style="margin-top:5px">
+                        {% if subRow.vars.name == "isStorage" %}
+
+                        {% else %}
+                            {{ form_label(subRow)}}:
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-10" style="margin-top:5px">
+                        {% if subRow.vars.name == "isStorage" %}
+
+                        {% else %}
+                            {{ form_widget(subRow)}}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
         <input class="btn" type="submit" value="{{ 'registration.submit'|trans }}" />
     </div>
-{{ form_end(form) }}
+{{ form_end(form, {'render_rest': false}) }}
 </div>

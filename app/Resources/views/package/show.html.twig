@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+    <div class="card-title" style="text-align: center;margin-top: 5px;"><h1>#{{ package.id }} Csomagom megtekintése</h1></div>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <th>Requestdate</th>
+                <th>Delivereddate</th>
+                <th>Tag</th>
+            </tr>
+            <tr>
+                <td>{{ package.id }}</td>
+                <td>{% if package.requestDate %}{{ package.requestDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if package.deliveredDate %}{{ package.deliveredDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ package.tag }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{{ path('package_index') }}">Vissza a csomagjaimhoz</a><br>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-primary" style="margin-top: 5px;" href="{{ path('package_edit', { 'id': package.id }) }}">Szerkeztés</a>
+            {{ form_start(delete_form) }}
+                <input style="margin-top: 5px;display: block;" class="btn btn-danger" type="submit" value="Törlés">
+            {{ form_end(delete_form) }}
+        {% endif %}
+{% endblock %}

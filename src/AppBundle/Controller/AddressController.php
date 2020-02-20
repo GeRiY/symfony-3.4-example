@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Address controller.
  *
- * @Route("address")
+ * @Route("admin/address")
  */
 class AddressController extends Controller
 {

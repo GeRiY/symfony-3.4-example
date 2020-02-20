@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Packagestatus controller.
  *
- * @Route("packagestatus")
+ * @Route("admin/packagestatus")
  */
 class PackageStatusController extends Controller
 {
