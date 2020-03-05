@@ -3,9 +3,15 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Package;
+use AppBundle\Entity\TransferStatus;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Package controller.
@@ -45,6 +51,9 @@ class PackageController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $username = $this->get('security.token_storage')->getToken()->getUsername();
+            $user = $em->getRepository('AppBundle:User')->findOneByUsername($username);
+            $package->setOwner($user);
             $em->persist($package);
             $em->flush();
 
@@ -132,5 +141,68 @@ class PackageController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * Displays a form to edit an existing package entity.
+     *
+     * @Route("/change/transfer/status", name="change_package_transfer_status")
+     * @Method({"POST"})
+     */
+    public function changeTransferStatusAction(Request $request)
+    {
+        $error = "";
+        $em = $this->getDoctrine()->getManager();
+        $selectPackage = $this->createFormBuilder(array('name' => 'search'))
+            ->add('id', TextType::class, [
+                'label' => 'Csomag azonosító'
+            ])
+            ->add('search', SubmitType::class, ['label' => 'Keresés'])
+            ->getForm();
+
+            $selectPackage->handleRequest($request);
+            if($selectPackage->isSubmitted() && $selectPackage->isValid()){
+                $id = $request->request->get('form')['id'];
+                $package = $em->getRepository(Package::class)->find($id);
+                $query = $em->createQuery("select ts from AppBundle:TransferStatus ts where ts.id > ".$package->getTransferStatus()->getId());
+                $transferStatusArray = $query->getResult();
+                if($package instanceof Package)
+                {
+                    $changeStatus = $this->createFormBuilder(array('name' => 'change'))
+                        ->add('transferStatus', EntityType::class, [
+                            'class' => 'AppBundle\Entity\TransferStatus',
+                            'choices' => $transferStatusArray,
+                            'choice_label' => 'name',
+                            'label' => 'Szállító státusz'
+                        ])
+                        ->add('save', SubmitType::class, ['label' => 'Léptetés'])
+                        ->getForm();
+
+                    $changeStatus->handleRequest($request);
+                    if ($changeStatus->isSubmitted() && $changeStatus->isValid()) {
+                        $em->persist($package);
+                        $em->flush();
+                        $this->redirectToRoute('package_index');
+                    }
+
+                    return $this->render('processes/changePackageStatus.html.twig', array(
+                        'package' => $package,
+                        'form' => $changeStatus->createView()
+                    ));
+                }else{
+                    $error = "A csomag nem létezik";
+                }
+            }
+//        //print_r($editForm->isValid()); exit();
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $em->persist($package);
+//            $em->flush();
+//            $this->redirectToRoute('package_index');
+//        }
+
+        return $this->render('processes/changePackageStatus.html.twig', array(
+            'form' => $selectPackage->createView(),
+            'error' => $error
+        ));
     }
 }

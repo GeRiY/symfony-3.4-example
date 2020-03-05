@@ -11,6 +11,11 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Tulajdonos</th>
+                <th>Csomag státusz</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>Szállító státusz</th>
+                {% endif %}
                 <th>Felvitel dátum</th>
                 <th>Kézbesítés dátum</th>
                 <th>Honna</th>
@@ -23,6 +28,11 @@
         {% for package in packages %}
             <tr>
                 <td>{{ package.id }}</td>
+                <td>{% if package.owner is not null %}{{ package.owner.username }}{% else %}{% endif %}</td>
+                <td>{{ package.packageStatus.name }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>{{ package.transferStatus.name }}</td>
+                {% endif %}
                 <td>{% if package.requestDate %}{{ package.requestDate|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if package.deliveredDate %}{{ package.deliveredDate|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ package.startAddress.name }}</td>
@@ -31,9 +41,10 @@
                 <td>{% if package.tag is not null %}{{ package.tag.name }}{% else %}{% endif %}</td>
 
                 <td>
-                    <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('package_show', { 'id': package.id }) }}">Megtekintés</a>
+                    <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('package_show', { 'id': package.id }) }}">Megtekintés</a><br><br>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('package_edit', { 'id': package.id }) }}">Módosítás</a>
+                        <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('package_edit', { 'id': package.id }) }}">Módosítás</a><br><br>
+{#                        <a class="btn btn-primary" class="nav-link" href="{{path('package_change_status', {'id': package.id})}}">Státusz léptetés</a>#}
                     {% endif %}
                 </td>
             </tr>

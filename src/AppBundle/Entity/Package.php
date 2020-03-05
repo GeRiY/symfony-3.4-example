@@ -106,6 +106,16 @@ class Package
     private $handler;
 
     /**
+     * @var \AppBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="owner", referencedColumnName="id")
+     * })
+     */
+    private $owner;
+
+    /**
      * @var \AppBundle\Entity\Tag
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tag")
@@ -445,6 +455,22 @@ class Package
     public function setLength($length)
     {
         $this->length = $length;
+    }
+
+    /**
+     * @return User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param User $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
     }
 
 

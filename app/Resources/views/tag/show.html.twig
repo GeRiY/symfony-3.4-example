@@ -16,9 +16,9 @@
             </tr>
         </tbody>
     </table>
-        <a class="btn btn-primary" style="margin: 5px;" href="{{ path('tag_index') }}">Back to the list</a><br>
-        <a class="btn btn-primary" style="margin: 5px;" href="{{ path('tag_edit', { 'id': tag.id }) }}">Edit</a>
+        <a class="btn btn-primary" style="margin: 5px;" href="{{ path('tag_index') }}">Vissza a listához</a><br>
+        <a class="btn btn-primary" style="margin: 5px;" href="{{ path('tag_edit', { 'id': tag.id }) }}">Módosítás</a>
         {{ form_start(delete_form) }}
-            <input class="btn btn-danger" style="margin: 5px;" type="submit" value="Delete">
+            <input class="btn btn-danger" style="margin: 5px;" type="submit" value="Törlés">
         {{ form_end(delete_form) }}
 {% endblock %}

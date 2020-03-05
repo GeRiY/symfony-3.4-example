@@ -2,16 +2,21 @@
 
 {% block body %}
     {% block header %}{{ parent() }}{% endblock %}
-    <h1>Tag creation</h1>
-
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12"><h1 style="text-align: center;margin-top:5px;margin-bottom:40px;">Tag felvitel</h1></div>
+        <div class="col-lg-1">
+            {{ form_label(form.name) }}
+        </div>
+        <div class="col-lg-5">
+            {{ form_widget(form.name) }}
+            <input class="btn btn-primary" type="submit" value="Felvitel" />
+        </div>
+        <div class="col-lg-12">
+            <a class="btn btn-primary" href="{{ path('tag_index') }}">Vissza a listához</a>
+        </div>
+    </div>
+</div>
     {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('tag_index') }}">Back to the list</a>
-        </li>
-    </ul>
 {% endblock %}

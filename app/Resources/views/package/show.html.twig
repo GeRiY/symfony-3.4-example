@@ -18,7 +18,7 @@
                 <td>{{ package.id }}</td>
                 <td>{% if package.requestDate %}{{ package.requestDate|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if package.deliveredDate %}{{ package.deliveredDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ package.tag }}</td>
+                <td>{% if package.tag is not null %}{{ package.tag.name }}{% else %}{% endif %}</td>
             </tr>
         </tbody>
     </table>

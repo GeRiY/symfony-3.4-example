@@ -12,6 +12,7 @@
 namespace FOS\UserBundle\Form\Type;
 
 use AppBundle\Form\AddressType;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -42,6 +43,8 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
             ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
+            ->add('firstName', TextType::class, array('label' => 'Keresztnév', 'translation_domain' => 'FOSUserBundle'))
+            ->add('lastName', TextType::class, array('label' => 'Vezetéknév', 'translation_domain' => 'FOSUserBundle'))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'options' => array(

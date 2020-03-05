@@ -13,11 +13,11 @@
             <div class="col-lg-2">
                 {{ form_widget(edit_form.name) }}
             </div>
-            <div class="col-lg-2">
-                <input type="submit" value="Szerkeztés"/>
-                <input type="submit" value="Törlés">
+            <div class="col-lg-4">
+                <input class="btn btn-primary" type="submit" value="Szerkeztés"/>
+                <input class="btn btn-danger" type="submit" value="Törlés">
             </div>
-            <div class="col-lg-12"><div style="margin-top:20px;"><a href="{{ path('tag_index') }}">Vissza a listához</a></div></div>
+            <div class="col-lg-12"><div style="margin-top:20px;"><a class="btn btn-primary" href="{{ path('tag_index') }}">Vissza a listához</a></div></div>
         </div>
     </div>
     {{ form_end(delete_form) }}
