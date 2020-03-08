@@ -4,6 +4,8 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,10 +18,15 @@ class AddressType extends AbstractType
     {
         $builder->add('city')
                 ->add('isStorage', CheckboxType::Class, [
+                    'label' => 'Ez egy raktár.',
                     'data' => false
                 ])
-                ->add('streetAndNumber')
-                ->add('zipcode');
+                ->add('streetAndNumber', TextType::class, [
+                    'label' => 'Utca házszám'
+                ])
+                ->add('zipcode', NumberType::class, [
+                    'label' => 'Irányítószám'
+                ]);
     }/**
      * {@inheritdoc}
      */

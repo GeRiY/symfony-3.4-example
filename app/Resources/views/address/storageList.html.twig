@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% block header %}{{ parent() }}{% endblock %}
+    <h1>Addresses list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Isstorage</th>
+                <th>Streetandnumber</th>
+                <th>Zipcode</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for storage in storages %}
+            <tr>
+                <td><a href="{{ path('address_show', { 'id': storage.id }) }}">{{ storage.city }}</a></td>
+                <td>{{ storage.isStorage }}</td>
+                <td>{{ storage.streetAndNumber }}</td>
+                <td>{{ storage.zipcode }}</td>
+                <td>{{ storage.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('address_show', { 'id': storage.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('address_edit', { 'id': storage.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('address_new') }}">Create a new address</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -5,7 +5,11 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Address;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Address controller.
@@ -24,7 +28,7 @@ class AddressController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $addresses = $em->getRepository('AppBundle:Address')->findAll();
+        $addresses = $em->getRepository('AppBundle:Address')->findByIsStorage(false);
 
         return $this->render('address/index.html.twig', array(
             'addresses' => $addresses,
@@ -40,6 +44,7 @@ class AddressController extends Controller
     public function newAction(Request $request)
     {
         $address = new Address();
+        $address->setIsStorage(true);
         $form = $this->createForm('AppBundle\Form\AddressType', $address);
         $form->handleRequest($request);
 
@@ -101,20 +106,22 @@ class AddressController extends Controller
     /**
      * Deletes a address entity.
      *
-     * @Route("/{id}", name="address_delete")
+     * @Route("/delete/{id}", name="address_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Address $address)
     {
-        $form = $this->createDeleteForm($address);
-        $form->handleRequest($request);
+        if(!$address->getIsStorage()) {
+            $form = $this->createDeleteForm($address);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($address);
-            $em->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($address);
+                $em->flush();
+            }
+
         }
-
         return $this->redirectToRoute('address_index');
     }
 
@@ -133,4 +140,78 @@ class AddressController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Displays a form to edit an existing package entity.
+     *
+     * @Route("/storage/remove", name="remove_storage")
+     * @Method({"POST"})
+     */
+    public function removeStorageAction(Request $request)
+    {
+        $error = "";
+        $em = $this->getDoctrine()->getManager();
+        $selectStorage = $this->createFormBuilder(array('name' => 'search'))
+            ->add('id', TextType::class, [
+                'label' => 'Raktár azonosító'
+            ])
+            ->add('search', SubmitType::class, ['label' => 'Törlés'])
+            ->getForm();
+
+        $selectStorage->handleRequest($request);
+        if($selectStorage->isSubmitted() && $selectStorage->isValid()){
+            $id = $request->request->get('form')['id'];
+            $address = $em->getRepository('AppBundle:Address')->find($id);
+            
+            if($address instanceof Address)
+            {
+
+                $form = $this->createDeleteForm($address)->add('delete', SubmitType::class, [
+                    'label' => 'Törlés'
+                ]);
+
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    print_r("létezik");
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->remove($address);
+                    $em->flush();
+                    //return $this->redirectToRoute('address_storages');
+                }
+
+                return $this->render('processes/removeStorage.html.twig', array(
+                    'form' => $form->createView(),
+                    'address' => $address,
+                    'error' => $error
+                ));
+            }else{
+                $error = "A Raktár nem található";
+            }
+        }
+
+        return $this->render('processes/removeStorage.html.twig', array(
+            'form' => $selectStorage->createView(),
+            'error' => $error
+        ));
+    }
+
+
+    /**
+     * Lists Storage entities.
+     *
+     * @Route("/list/storage", name="address_list_storage")
+     * @Method("GET")
+     */
+    public function StorageAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $addresses = $em->getRepository('AppBundle:Address')->findByIsStorage(true);
+
+        return $this->render('address/index.html.twig', array(
+            'addresses' => $addresses,
+        ));
+    }
+
 }

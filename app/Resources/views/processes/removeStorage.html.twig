@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+    {{ dump(form) }}
+    {% if form.vars.value is not null and form.vars.value['name'] == 'search' %}
+        {% if error != "" %}
+            <span class="alert-danger">{{ error }}</span>
+        {% endif %}
+    {{ form_start(form) }}
+    {{ form_row(form) }}
+    {{ form_end(form)}}
+
+    {% else %}
+    {{ form_start(form) }}
+    <div class="card-title" style="text-align: center;margin-top: 5px;"><h1>Raktár törlés</h1></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <p><b>Kijelölt raktár:</b> {{ address.name }}</p>
+                {{ form_widget(form.delete) }}<br>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+    {% endif %}
+{% endblock %}
