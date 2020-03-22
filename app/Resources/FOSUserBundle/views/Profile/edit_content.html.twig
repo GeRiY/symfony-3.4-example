@@ -1,21 +1,29 @@
 {% trans_default_domain 'FOSUserBundle' %}
-
+<style>p label{
+        height: 31px;
+    }</style>
 {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
 <div class="container">
     <div style="text-align: center;"><h1 style="text-align: center;margin-top:5px;margin-bottom:40px;">Profil szerkeztés</h1></div>
     <div class="row">
         <div class="col-lg-2">
-            {{ form_label(form.username) }}:<br><br>
-            {{ form_label(form.email) }}:<br><br>
-            {{ form_label(form.current_password) }}:
+            <p>{{ form_label(form.username) }}:</p>
+            <p>{{ form_label(form.firstName) }}:</p>
+            <p>{{ form_label(form.lastName) }}:</p>
+            <p>{{ form_label(form.email) }}:</p>
+            <p>{{ form_label(form.current_password) }}:</p>
+            <p>{{ form_label(form.address) }}:</p>
         </div>
         <div class="col-lg-2">
-            {{ form_widget(form.username) }}<br><br>
-            {{ form_widget(form.email) }}<br><br>
-            {{ form_widget(form.current_password) }}
+            <p>{{ form_widget(form.username) }}</p>
+            <p>{{ form_widget(form.firstName) }}</p>
+            <p>{{ form_widget(form.lastName) }}</p>
+            <p>{{ form_widget(form.email) }}</p>
+            <p>{{ form_widget(form.current_password) }}</p>
+            <p>{{ form_widget(form.address) }}</p>
         </div>
         <div class="col-lg-12">
-            <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+            <input class="btn btn-primary" type="submit" value="{{ 'profile.edit.submit'|trans }}" />
         </div>
     </div>
 </div>

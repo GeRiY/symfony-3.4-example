@@ -6,7 +6,10 @@
         <div class="col-lg-12">
             <div class="fos_user_user_show">
                 <p><b>{{ 'profile.show.username'|trans }}:</b> {{ user.username }}</p>
+                <p><b>Teljes név:</b> {{ user.fullname }}</p>
+                <p><b>Cím:</b> {{ user.address.name }}</p>
                 <p><b>{{ 'profile.show.email'|trans }}:</b> {{ user.email }}</p>
+                <p><b>Beosztás:</b> {{ user.role.name }}</p>
                 <a class="btn btn-primary" href="{{ path('fos_user_profile_edit') }}">Szerkeztés</a>
             </div>
         </div>
