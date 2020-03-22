@@ -18,29 +18,17 @@
                             {% if app.user.role.id == 1 %}
                                 <li class="nav-item"><a class="nav-link" href="{{path('package_index')}}">Rendelések</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{{path('tag_index')}}">Tags felvétele</a></li>
-
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Státusz léptetés</a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="">Csomag státusz léptetés</a>
-                                        <a class="dropdown-item" href="{{path('change_package_transfer_status')}}">Szállító státusz léptetés</a>
-                                        <div class="dropdown-divider"></div>
-                                    </div>
-                                </li>
-
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Raktár</a>
                                 <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="">Raktár nézet váltás</a>
-                                            <a class="dropdown-item" href="{#{{ path('address_storage') }}#}#">Raktárak</a>
+                                            <a class="dropdown-item" href="{{ path('address_list_storage')}}">Raktárak</a>
                                             <a class="dropdown-item" href="{{ path('address_new') }}">Raktár felvétel</a>
-                                            <a class="dropdown-item" href="{{ path('remove_storage') }}">Raktár törlés</a>
                                     <div class="dropdown-divider"></div>
                                 </div>
                             </li>
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                 <li class="nav-item offset-5">
-                                    <a class="nav-link" href="{{ path('fos_user_profile_show') }}">Profilom: {{ app.user.username }}</a>
+                                    <a class="nav-link" href="{{ path('fos_user_profile_show') }}">Profilom: {{ app.user.fullName }}</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{path("fos_user_security_logout")}}">Kijelentkezés</a>
@@ -49,23 +37,15 @@
                         {% elseif app.user.role.id == 2 %}
                             <li class="nav-item"><a class="nav-link" href="{{path('package_index')}}">Rendelések</a></li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Státusz léptetés</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{path('change_package_transfer_status')}}">Szállító Státusz léptetés</a>
-                                    <div class="dropdown-divider"></div>
-                                </div>
-                            </li>
-
-                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Raktár</a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="">Raktár nézet váltás</a>
+                                    <a class="dropdown-item" href="{{ path('set_user_storage') }}">Raktár nézet váltás</a>
                                     <div class="dropdown-divider"></div>
                                 </div>
                             </li>
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                 <li class="nav-item offset-6">
-                                    <a class="nav-link" href="{{ path('fos_user_profile_show') }}">Profilom: {{ app.user.username }}</a>
+                                    <a class="nav-link" href="{{ path('fos_user_profile_show') }}">Profilom: {{ app.user.fullName }}</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{path("fos_user_security_logout")}}">Kijelentkezés</a>
@@ -81,8 +61,8 @@
 {#                                    <a class="nav-link" href="{{path('package_new')}}">Új csomag feladása</a>#}
 {#                                </li>#}
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                <li class="nav-item offset-7">
-                                    <a class="nav-link" href="{{ path('fos_user_profile_show') }}">Profilom: {{ app.user.username }}</a>
+                                <li class="nav-item offset-6">
+                                    <a class="nav-link" href="{{ path('fos_user_profile_show') }}">Profilom: {{ app.user.fullName }}</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{path("fos_user_security_logout")}}">Kijelentkezés</a>

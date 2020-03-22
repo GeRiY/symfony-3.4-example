@@ -4,7 +4,7 @@
     {% block header %}
         {{ parent() }}
     {% endblock %}
-    {{ dump(form) }}
+{#    {{ dump(form) }}#}
     {% if form.vars.value is not null and form.vars.value['name'] == 'search' %}
         {% if error != "" %}
             <span class="alert-danger">{{ error }}</span>

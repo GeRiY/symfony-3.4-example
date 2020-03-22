@@ -42,9 +42,21 @@
 
                 <td>
                     <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('package_show', { 'id': package.id }) }}">Megtekintés</a><br><br>
+
                     {% if is_granted('ROLE_ADMIN') %}
                         <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('package_edit', { 'id': package.id }) }}">Módosítás</a><br><br>
+
+                    {% endif %}
+
+                    {% if is_granted('ROLE_SZALLITO') %}
+                        {% if package.courier is not null and package.courier.user == app.user and package.transferStatus.id == 1 %}
+                        <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('give_package_to_storage', { 'id': package.id }) }}">Leadás</a><br><br>
 {#                        <a class="btn btn-primary" class="nav-link" href="{{path('package_change_status', {'id': package.id})}}">Státusz léptetés</a>#}
+                            {% elseif package.currentPosition is not null and package.currentPosition == app.user.storage and package.courier is null %}
+                                <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('get_package_from_storage', { 'id': package.id }) }}">Felvétel</a><br><br>
+                            {% elseif package.currentPosition is null and package.transferStatus.id == 3 %}
+                                <a class="btn btn-primary" style="margin-right: 5px;" href="{{ path('set_package_complet', { 'id': package.id }) }}">Kézbesítés</a><br><br>
+                            {% endif %}
                     {% endif %}
                 </td>
             </tr>

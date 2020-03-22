@@ -16,9 +16,10 @@
     </table>
     <input type="submit" value="Edit" />
     <a class="btn btn-primary" href="{{ path('address_index') }}">Back to the list</a>
+
+    </div>
+    {{ form_end(edit_form) }}
     {{ form_start(delete_form) }}
     <input class="btn btn-primary" type="submit" value="Delete">
     {{ form_end(delete_form) }}
-    </div>
-    {{ form_end(edit_form) }}
 {% endblock %}

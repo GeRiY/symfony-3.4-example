@@ -8,7 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * Package
  *
  * @ORM\Table(name="package", indexes={@ORM\Index(name="package_fk0", columns={"start_address"}), @ORM\Index(name="package_fk1", columns={"target_address"}), @ORM\Index(name="package_fk2", columns={"current_position"}), @ORM\Index(name="package_fk3", columns={"package_status"}), @ORM\Index(name="package_fk4", columns={"transfer_status"}), @ORM\Index(name="package_fk6", columns={"tag"}), @ORM\Index(name="package_fk7", columns={"courier"}), @ORM\Index(name="package_fk8", columns={"handler"})})
- * @ORM\Entity
+ *
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PackageRepository")
  */
 class Package
 {
@@ -58,7 +59,7 @@ class Package
     /**
      * @var \AppBundle\Entity\Position
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Position")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Address")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="current_position", referencedColumnName="id")
      * })
@@ -292,11 +293,11 @@ class Package
     /**
      * Set currentPosition
      *
-     * @param \AppBundle\Entity\Position $currentPosition
+     * @param \AppBundle\Entity\Address $currentPosition
      *
      * @return Package
      */
-    public function setCurrentPosition(\AppBundle\Entity\Position $currentPosition = null)
+    public function setCurrentPosition(\AppBundle\Entity\Address $currentPosition = null)
     {
         $this->currentPosition = $currentPosition;
 
@@ -306,7 +307,7 @@ class Package
     /**
      * Get currentPosition
      *
-     * @return \AppBundle\Entity\Position
+     * @return \AppBundle\Entity\Address
      */
     public function getCurrentPosition()
     {

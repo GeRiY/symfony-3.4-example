@@ -37,12 +37,20 @@ class PackageType extends AbstractType
             ->add('startAddress', EntityType::class, [
                 'class' => 'AppBundle\Entity\Address',
                 'choice_label' => 'name',
-                'label' => 'Honnan szállítod'
+                'label' => 'Honnan szállítod',
+                'query_builder' => function (EntityRepository $er){
+                    return $er->createQueryBuilder('a')
+                        ->where('a.isStorage = 0');
+                },
             ])
             ->add('targetAddress', EntityType::class, [
                 'class' => 'AppBundle\Entity\Address',
                 'choice_label' => 'name',
-                'label' => 'Hova szállítod'
+                'label' => 'Hova szállítod',
+                'query_builder' => function (EntityRepository $er){
+                    return $er->createQueryBuilder('a')
+                        ->where('a.isStorage = 0');
+                },
             ])
 //            ->add('currentPosition', AddressType::class)
             ->add('packageStatus', EntityType::class, [

@@ -58,6 +58,15 @@ protected $id;
      */
     protected $role;
 
+    /**
+     * @var \AppBundle\Entity\UserRole
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Address")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="storage", referencedColumnName="id")
+     * })
+     */
+    protected $storage;
 
 
     /**
@@ -129,8 +138,25 @@ protected $id;
      */
     public function getFullName()
     {
-       return $this->firstName.''.$this->lastName;
+       return $this->firstName.' '.$this->lastName;
     }
+
+    /**
+     * @return UserRole
+     */
+    public function getStorage()
+    {
+        return $this->storage;
+    }
+
+    /**
+     * @param UserRole $storage
+     */
+    public function setStorage($storage)
+    {
+        $this->storage = $storage;
+    }
+
 
 
 

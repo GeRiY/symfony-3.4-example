@@ -19,7 +19,8 @@ class AddressType extends AbstractType
         $builder->add('city')
                 ->add('isStorage', CheckboxType::Class, [
                     'label' => 'Ez egy raktár.',
-                    'data' => false
+                    'data' => false,
+                    "required" => false
                 ])
                 ->add('streetAndNumber', TextType::class, [
                     'label' => 'Utca házszám'

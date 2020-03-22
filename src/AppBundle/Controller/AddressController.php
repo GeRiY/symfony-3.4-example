@@ -111,7 +111,7 @@ class AddressController extends Controller
      */
     public function deleteAction(Request $request, Address $address)
     {
-        if(!$address->getIsStorage()) {
+
             $form = $this->createDeleteForm($address);
             $form->handleRequest($request);
 
@@ -121,7 +121,7 @@ class AddressController extends Controller
                 $em->flush();
             }
 
-        }
+
         return $this->redirectToRoute('address_index');
     }
 
